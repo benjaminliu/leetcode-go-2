@@ -11,3 +11,7 @@ func PrintListNode(head *structures.ListNode) {
 		head = head.Next
 	}
 }
+
+func Println(num int) {
+	fmt.Println(num)
+}
