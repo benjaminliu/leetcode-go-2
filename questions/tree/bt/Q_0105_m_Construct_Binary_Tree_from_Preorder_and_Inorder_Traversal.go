@@ -13,16 +13,21 @@ func helper(preorder []int, preStart, preEnd, inStart int, idxMap map[int]int) *
 	if preStart > preEnd {
 		return nil
 	}
-	if preStart == preEnd {
-		return &TreeNode{Val: preorder[preStart]}
-	}
 
 	cur := preorder[preStart]
-	curIdx := idxMap[cur]
-	count := curIdx - inStart
-
 	root := &TreeNode{Val: cur}
-	root.Left = helper(preorder, preStart+1, preStart+count, inStart, idxMap)
-	root.Right = helper(preorder, preStart+count+1, preEnd, curIdx+1, idxMap)
+
+	if preStart == preEnd {
+		return root
+	}
+
+	idx := idxMap[cur]
+	lastDescentIdx := idx - 1
+
+	//idxDiff = count - 1
+	idxDiff := lastDescentIdx - inStart
+
+	root.Left = helper(preorder, preStart+1, preStart+1+idxDiff, inStart, idxMap)
+	root.Right = helper(preorder, preStart+1+idxDiff+1, preEnd, idx+1, idxMap)
 	return root
 }
